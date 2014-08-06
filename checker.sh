@@ -4,11 +4,13 @@
 # leave an empty line in the end.
 
 # Quiet mode. false for test purposes. true for cron.
-QUIET=true
+QUIET=false
 # Send mail in case of failure to:
 EMAIL=erithq@gmail.com
 # list of websites. each website in new line. leave an empty line in the end.
 LISTFILE=/scripts/isOnline/websites.txt
+
+
 
 function test {
   response=$(curl --write-out %{http_code} --silent --output /dev/null $1)
@@ -17,20 +19,22 @@ function test {
       #echo -e "\e[31mDOWN\e[0m"
   #fi
   #curl -s -o "/dev/null" $1
+  filename=$1 | cut -f1 -d"/"
 
   #if wget $1 --timeout=900 --spider -q; then
     if [ "$QUIET" = false ] ; then
       echo -n "$response "
       echo -e "\e[32m[ok]\e[0m"
     fi
-    if [ -f cache/$1 ]; then
-      rm -f cache/$1
+    if [ -f cache/$filename ]; then
+      rm -f cache/$filename
     fi
   else
     if [ "$QUIET" = false ] ; then
-      echo -e "\e[31mDOWN\e[0m"
+      echo -n "$response "
+      echo -e "\e[31m[DOWN]\e[0m"
     fi
-    if [ ! -f cache/$1 ]; then
+    if [ ! -f cache/$filename ]; then
         # using mail command
         #mail -s "$p WEBSITE DOWN" "$EMAIL"
         # using mailx command

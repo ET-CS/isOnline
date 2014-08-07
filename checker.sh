@@ -4,7 +4,7 @@
 # leave an empty line in the end.
 
 # Quiet mode. false for test purposes. true for cron.
-QUIET=false
+QUIET=true
 # Send mail in case of failure to:
 EMAIL=erithq@gmail.com
 # list of websites. each website in new line. leave an empty line in the end.

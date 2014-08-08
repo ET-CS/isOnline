@@ -18,4 +18,4 @@ in this example crontab will run ```checker.sh``` every 30min.
 
 by [ET][ET].
 
-[ET][http://etcs.me]
+[ET]: http://etcs.me

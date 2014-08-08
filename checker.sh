@@ -10,23 +10,33 @@ EMAIL=erithq@gmail.com
 # list of websites. each website in new line. leave an empty line in the end.
 LISTFILE=/scripts/isOnline/websites.txt
 
-
+# Set THIS_IS_CRON=1 in the beginning of your crontab -e.
+# else you will get the log as mail each time
+if [ -n "$THIS_IS_CRON" ]; then
+    QUIET=true
+    #echo "I'm running in cron";
+else
+    QUIET=false
+    #echo "I'm not running in cron";
+fi
 
 function test {
   response=$(curl --write-out %{http_code} --silent --output /dev/null $1)
+  filename=$( echo $1 | cut -f1 -d"/" )
+
+  if [ "$QUIET" = false ] ; then
+    #echo -n "$p (using $filename .cache file) "
+    echo -n "$p "
+  fi
+
   #if [ $response -eq 200 ] || [ $response -eq 301 ] ; then
   if [ $response -eq 200 ] ; then
-      #echo -e "\e[31mDOWN\e[0m"
-  #fi
-  #curl -s -o "/dev/null" $1
-  filename=$1 | cut -f1 -d"/"
-
-  #if wget $1 --timeout=900 --spider -q; then
     if [ "$QUIET" = false ] ; then
       echo -n "$response "
       echo -e "\e[32m[ok]\e[0m"
     fi
     if [ -f cache/$filename ]; then
+      echo "previously was error."
       rm -f cache/$filename
     fi
   else
@@ -45,8 +55,5 @@ function test {
 }
 
 while read p; do
-  if [ "$QUIET" = false ] ; then
-    echo -n "$p "
-  fi
   test $p
 done < $LISTFILE

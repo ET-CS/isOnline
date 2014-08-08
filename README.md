@@ -14,4 +14,4 @@ THIS_IS_CRON=1
 */30 * * * * /path/to/isOnline/checker.sh
 ```
 
-this example will run every 30min.
+in this example crontab will run ```checker.sh``` every 30min.

@@ -29,7 +29,7 @@ function test {
     if [ ! -f cache/$filename ]; then
         while read e; do
             # using mailx command
-            echo "$p WEBSITE DOWN" | mailx -s "$1 WEBSITE DOWN" $e
+            echo "$p WEBSITE DOWN" | mailx -s "$1 WEBSITE DOWN ( $response )" $e
             # using mail command
             #mail -s "$p WEBSITE DOWN" "$EMAIL"
         done < $EMAILLISTFILE

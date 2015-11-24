@@ -25,11 +25,11 @@ function test {
       echo -n "$response "; echo -e "\e[32m[ok]\e[0m"
     fi
     # remove .temp file if exist 
-    if [ -f $TEMPDIR/$filename ]; then rm -f cache/$filename; fi
+    if [ -f $TEMPDIR/$filename ]; then rm -f $TEMPDIR/$filename; fi
   else
     # website down
     if [ "$QUIET" = false ] ; then echo -n "$response "; echo -e "\e[31m[DOWN]\e[0m"; fi
-    if [ ! -f cache/$filename ]; then
+    if [ ! -f $TEMPDIR/$filename ]; then
         while read e; do
             # using mailx command
             echo "$p WEBSITE DOWN" | mailx -s "$1 WEBSITE DOWN ( $response )" $e

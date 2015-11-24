@@ -29,7 +29,7 @@ function test {
   else
     # website down
     if [ "$QUIET" = false ] ; then echo -n "$response "; echo -e "\e[31m[DOWN]\e[0m"; fi
-    if [ ! -f cache/$filename ]; then
+    if [ ! -f $TEMPDIR/$filename ]; then
         while read e; do
             # using mailx command
             echo "$p WEBSITE DOWN" | mailx -s "$1 WEBSITE DOWN ( $response )" $e

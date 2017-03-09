@@ -15,7 +15,7 @@ TEMPDIR=$WORKSPACE/cache
 if [ -n "$THIS_IS_CRON" ]; then QUIET=true; else QUIET=false; fi
 
 function test {
-  response=$(curl --write-out %{http_code} --silent --output /dev/null $1)
+  response=$(curl -L --write-out %{http_code} --silent --output /dev/null $1)
   filename=$( echo $1 | cut -f1 -d"/" )
   if [ "$QUIET" = false ] ; then echo -n "$p "; fi
 

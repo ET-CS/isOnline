@@ -7,7 +7,7 @@ Script for scheduled check of websites availability and mail report. Suited for 
 1. Create ```emails.lst``` file and fill it with each email in new line (as in ```emails.lst.example```). leave an empty line in the end.
 2. Create ```websites.lst``` file and fill it with each website in a new line (as in ```websites.lst.example```). leave an empty line in the end.
 
-    Note that the script will approve http response 200 only. url(s) with 301 (redirect) will fail.
+    Note that the script will follow url(s) with 301 (redirect).
 
 ## Add to crontab
 Add the following lines to crontab config ($ crontab -e) 

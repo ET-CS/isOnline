@@ -17,7 +17,7 @@ if [ -n "$THIS_IS_CRON" ]; then QUIET=true; else QUIET=false; fi
 function test {
   response=$(curl -L --write-out %{http_code} --silent --output /dev/null $1)
   filename=$( echo $1 | cut -f1 -d"/" )
-  if [ "$QUIET" = false ] ; then echo -n "$p "; fi
+  if [ "$QUIET" = false ] ; then echo -n "$1 "; fi
 
   if [ $response -eq 200 ] ; then
     # website working
@@ -32,9 +32,11 @@ function test {
     if [ ! -f $TEMPDIR/$filename ]; then
         while read e; do
             # using mailx command
-            echo "$p WEBSITE DOWN" | mailx -s "$1 WEBSITE DOWN ( $response )" $e
+            #echo "$1 WEBSITE DOWN" | mailx -s "$1 WEBSITE DOWN ( $response )" $e
             # using mail command
             #mail -s "$p WEBSITE DOWN" "$EMAIL"
+            # using sendmail
+            echo -e "Subject: $1 WEBSITE DOWN ( $response ) \n\n $p WEBSITE DOWN" | sendmail -t $e
         done < $EMAILLISTFILE
         echo > $TEMPDIR/$filename
     fi
